@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -18,6 +19,10 @@ export default {
 			}
 		},
 		extend: {
+			fontFamily: {
+				'mono': ['JetBrains Mono', 'monospace'],
+				'code': ['Space Mono', 'monospace'],
+			},
 			colors: {
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
@@ -52,21 +57,21 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
-				sidebar: {
-					DEFAULT: 'hsl(var(--sidebar-background))',
-					foreground: 'hsl(var(--sidebar-foreground))',
-					primary: 'hsl(var(--sidebar-primary))',
-					'primary-foreground': 'hsl(var(--sidebar-primary-foreground))',
-					accent: 'hsl(var(--sidebar-accent))',
-					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
-					border: 'hsl(var(--sidebar-border))',
-					ring: 'hsl(var(--sidebar-ring))'
+				// Pixel art inspired colors
+				pixel: {
+					green: '#00ff41',
+					blue: '#0066ff',
+					purple: '#9933ff',
+					orange: '#ff6600',
+					pink: '#ff3399',
+					yellow: '#ffff00',
 				}
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
 				md: 'calc(var(--radius) - 2px)',
-				sm: 'calc(var(--radius) - 4px)'
+				sm: 'calc(var(--radius) - 4px)',
+				pixel: '2px',
 			},
 			keyframes: {
 				'accordion-down': {
@@ -84,11 +89,42 @@ export default {
 					to: {
 						height: '0'
 					}
+				},
+				'pixel-bounce': {
+					'0%, 100%': {
+						transform: 'translateY(0px)',
+					},
+					'50%': {
+						transform: 'translateY(-4px)',
+					}
+				},
+				'typewriter': {
+					'0%': {
+						width: '0'
+					},
+					'100%': {
+						width: '100%'
+					}
+				},
+				'blink': {
+					'0%, 50%': {
+						opacity: '1'
+					},
+					'51%, 100%': {
+						opacity: '0'
+					}
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
+				'accordion-up': 'accordion-up 0.2s ease-out',
+				'pixel-bounce': 'pixel-bounce 2s ease-in-out infinite',
+				'typewriter': 'typewriter 3s steps(30) 1s forwards',
+				'blink': 'blink 1s infinite',
+			},
+			boxShadow: {
+				'pixel': '4px 4px 0px 0px rgba(0, 0, 0, 0.25)',
+				'pixel-hover': '6px 6px 0px 0px rgba(0, 0, 0, 0.25)',
 			}
 		}
 	},
