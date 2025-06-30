@@ -1,6 +1,7 @@
 
 import { useState } from 'react';
-import { Mail } from 'lucide-react';
+import { Mail, Send, Loader2 } from 'lucide-react';
+import emailjs from '@emailjs/browser';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -9,24 +10,59 @@ const Contact = () => {
     company: '',
     message: ''
   });
+  
+  const [isLoading, setIsLoading] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsLoading(true);
+    setSubmitStatus('idle');
     
-    // Create mailto link with form data
-    const subject = `Portfolio Contact from ${formData.name}`;
-    const body = `Name: ${formData.name}
+    try {
+      // EmailJS configuration - you'll need to set these environment variables
+      const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+      const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+      const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+      
+      if (!serviceId || !templateId || !publicKey) {
+        console.error('EmailJS configuration missing. Please check your environment variables.');
+        // Fallback to mailto for now
+        const subject = `Portfolio Contact from ${formData.name}`;
+        const body = `Name: ${formData.name}
 Email: ${formData.email}
 Company: ${formData.company}
 
 Message:
 ${formData.message}`;
-    
-    const mailtoLink = `mailto:jerry.robayo@example.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    window.location.href = mailtoLink;
-    
-    // Reset form
-    setFormData({ name: '', email: '', company: '', message: '' });
+        
+        const mailtoLink = `mailto:jerryrobayo1130@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        window.open(mailtoLink, '_blank');
+        setSubmitStatus('success');
+        setFormData({ name: '', email: '', company: '', message: '' });
+        return;
+      }
+
+      // Send email using EmailJS
+      const templateParams = {
+        name: formData.name,  // Changed from from_name to name
+        email: formData.email,  // Changed from from_email to email
+        company: formData.company,
+        message: formData.message,
+        to_email: 'jerryrobayo1130@gmail.com',
+      };
+
+      await emailjs.send(serviceId, templateId, templateParams, publicKey);
+      
+      setSubmitStatus('success');
+      setFormData({ name: '', email: '', company: '', message: '' });
+      
+    } catch (error) {
+      console.error('Failed to send email:', error);
+      setSubmitStatus('error');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -57,7 +93,7 @@ ${formData.message}`;
               </p>
               <div className="flex items-center gap-2 font-mono">
                 <Mail size={16} className="text-primary" />
-                <span className="text-muted-foreground">jerry.robayo@example.com</span>
+                <span className="text-muted-foreground">jerryrobayo1130@gmail.com</span>
               </div>
             </div>
 
@@ -133,9 +169,35 @@ ${formData.message}`;
                   />
                 </div>
 
-                <button type="submit" className="pixel-button w-full">
-                  Send Message
+                <button 
+                  type="submit" 
+                  disabled={isLoading}
+                  className="pixel-button w-full flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {isLoading ? (
+                    <>
+                      <Loader2 size={16} className="animate-spin" />
+                      Sending...
+                    </>
+                  ) : (
+                    <>
+                      <Send size={16} />
+                      Send Message
+                    </>
+                  )}
                 </button>
+                
+                {submitStatus === 'success' && (
+                  <div className="mt-4 p-3 bg-green-100 border-2 border-green-500 text-green-800 font-mono text-sm">
+                    ✓ Message sent successfully! I'll get back to you soon.
+                  </div>
+                )}
+                
+                {submitStatus === 'error' && (
+                  <div className="mt-4 p-3 bg-red-100 border-2 border-red-500 text-red-800 font-mono text-sm">
+                    ✗ Failed to send message. Please try again or email me directly.
+                  </div>
+                )}
               </div>
             </div>
           </form>
