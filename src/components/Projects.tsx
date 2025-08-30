@@ -2,10 +2,10 @@
 const Projects = () => {
   const projects = [
     {
-      title: "Project One",
-      description: "A full-stack web application built with React and Supabase, featuring user authentication and real-time data updates.",
-      technologies: ["React", "TypeScript", "Supabase", "Tailwind CSS"],
-      status: "In Development"
+      title: "Portfolio",
+      description: "A modern portfolio website built with React and TypeScript, featuring pixel-art design, animated backgrounds, and EmailJS contact integration. Also my very first portfolio website!",
+      technologies: ["React", "TypeScript", "Vite", "Tailwind CSS", "EmailJS", "Lucide React"],
+      status: "Completed"
     },
     {
       title: "Project Two", 
