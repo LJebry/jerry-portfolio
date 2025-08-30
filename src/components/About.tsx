@@ -1,8 +1,27 @@
 
+import { Squares } from "@/components/ui/squares-background";
+import { useTheme } from "next-themes";
+
 const About = () => {
+  const { theme } = useTheme();
+  
   return (
-    <section id="about" className="py-20 px-4">
-      <div className="container mx-auto max-w-4xl">
+    <section id="about" className="py-20 px-4 relative overflow-hidden">
+      {/* Squares Background Animation */}
+      <div className="absolute inset-0 w-full h-full">
+        <Squares
+          direction="diagonal"
+          speed={0.3}
+          squareSize={50}
+          borderColor={theme === 'dark' ? 'rgba(200, 200, 200, 0.6)' : 'rgba(60, 60, 60, 0.3)'}
+          hoverFillColor={theme === 'dark' ? 'rgba(128, 128, 128, 0.5)' : 'rgba(0, 0, 0, 0.05)'}
+          backgroundColor={theme === 'dark' ? 'transparent' : 'transparent'}
+          className="opacity-60"
+        />
+      </div>
+      
+      {/* Content */}
+      <div className="container mx-auto max-w-4xl relative z-10">
         <h2 className="text-4xl md:text-5xl font-code font-bold text-center mb-12">
           <span className="text-primary">&lt;</span>
           About Me
@@ -14,7 +33,7 @@ const About = () => {
             <div className="space-y-4 font-mono">
               <div className="text-pixel-blue">
                 <span className="text-pixel-purple">class</span>{' '}
-                <span className="text-pixel-yellow">JerryRobayo</span>{' '}
+                <span className="text-black dark:text-pixel-yellow">JerryRobayo</span>{' '}
                 <span className="text-foreground">{'{'}</span>
               </div>
               

@@ -1,5 +1,8 @@
 
+import { SineWaveDots } from "@/components/ui/sine-wave-dots";
+
 const Skills = () => {
+  
   const technologies = [
     { name: 'HTML', level: 95, color: 'text-pixel-orange' },
     { name: 'CSS', level: 90, color: 'text-pixel-blue' },
@@ -13,8 +16,22 @@ const Skills = () => {
   ];
 
   return (
-    <section id="skills" className="py-20 px-4 bg-muted/30">
-      <div className="container mx-auto max-w-4xl">
+    <section id="skills" className="py-20 px-4 bg-muted/30 relative overflow-hidden">
+      {/* Sine Wave Background Animation */}
+      <div className="absolute inset-0 w-full h-full">
+        <SineWaveDots
+          className="opacity-30 dark:opacity-20" 
+          dotColor="fill-gray-800/30 dark:fill-white/20"
+          gap={20}
+          dotRadius={2}
+          amplitude={30}
+          frequency={0.015}
+          speed={0.009}
+        />
+      </div>
+      
+      {/* Content */}
+      <div className="container mx-auto max-w-4xl relative z-10">
         <h2 className="text-4xl md:text-5xl font-code font-bold text-center mb-12">
           <span className="text-primary">&lt;</span>
           Skills
