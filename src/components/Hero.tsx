@@ -23,14 +23,10 @@ const Hero = () => {
   }, []);
 
   const handleDownloadResume = () => {
-    // Create a sample resume link - replace with actual resume URL
     const link = document.createElement('a');
-    link.href = '#'; // Replace with actual resume file path
+    link.href = '/Jerry_Resume.pdf';
     link.download = 'Jerry_Robayo_Resume.pdf';
     link.click();
-    
-    // For now, show a message
-    alert('Resume download feature - please replace with actual resume file!');
   };
 
   return (

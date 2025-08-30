@@ -14,7 +14,7 @@ const Projects = () => {
       technologies: ["React", "TypeScript", "Vite", "Tailwind CSS", "EmailJS", "Lucide React"],
       status: "Completed",
       githubUrl: "https://github.com/LJebry/jerry-portfolio",
-      liveUrl: "https://jerry-robayo-portfolio.com" // Replace with actual URL
+      liveUrl: "https://jerry-portfolio-kwux9adhe-ljebrys-projects.vercel.app"
     },
     {
       title: "Project Two", 
