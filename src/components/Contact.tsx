@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { Mail, Send, Loader2 } from 'lucide-react';
 import emailjs from '@emailjs/browser';
+import { BackgroundPaths } from "@/components/ui/background-paths";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -73,8 +74,14 @@ ${formData.message}`;
   };
 
   return (
-    <section id="contact" className="py-20 px-4 bg-muted/30">
-      <div className="container mx-auto max-w-4xl">
+    <section id="contact" className="py-20 px-4 bg-muted/30 relative overflow-hidden">
+      {/* Background Paths Animation - Flipped */}
+      <div className="absolute inset-0 w-full h-full transform scale-y-[-1]">
+        <BackgroundPaths />
+      </div>
+      
+      {/* Content */}
+      <div className="container mx-auto max-w-4xl relative z-10">
         <h2 className="text-4xl md:text-5xl font-code font-bold text-center mb-12">
           <span className="text-primary">&lt;</span>
           Get In Touch

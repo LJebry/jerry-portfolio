@@ -1,6 +1,7 @@
 
 import { useState, useEffect } from 'react';
 import { Download } from 'lucide-react';
+import { BackgroundPaths } from '@/components/ui/background-paths';
 
 const Hero = () => {
   const [displayText, setDisplayText] = useState('');
@@ -34,14 +35,8 @@ const Hero = () => {
 
   return (
     <section className="min-h-screen flex items-center justify-center relative overflow-hidden">
-      {/* Background grid pattern */}
-      <div className="absolute inset-0 opacity-5">
-        <div className="grid grid-cols-20 gap-4 h-full">
-          {Array.from({ length: 400 }).map((_, i) => (
-            <div key={i} className="border border-foreground"></div>
-          ))}
-        </div>
-      </div>
+      {/* Background Paths Animation */}
+      <BackgroundPaths />
 
       <div className="text-center z-10 max-w-4xl mx-auto px-4">
         <div className="mb-8">

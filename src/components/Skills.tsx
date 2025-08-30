@@ -1,7 +1,9 @@
 
-import { SineWaveDots } from "@/components/ui/sine-wave-dots";
+import { Squares } from "@/components/ui/squares-background";
+import { useTheme } from "next-themes";
 
 const Skills = () => {
+  const { theme } = useTheme();
   
   const technologies = [
     { name: 'HTML', level: 95, color: 'text-pixel-orange' },
@@ -17,16 +19,16 @@ const Skills = () => {
 
   return (
     <section id="skills" className="py-20 px-4 bg-muted/30 relative overflow-hidden">
-      {/* Sine Wave Background Animation */}
+      {/* Squares Background Animation */}
       <div className="absolute inset-0 w-full h-full">
-        <SineWaveDots
-          className="opacity-30 dark:opacity-20" 
-          dotColor="fill-gray-800/30 dark:fill-white/20"
-          gap={20}
-          dotRadius={2}
-          amplitude={30}
-          frequency={0.015}
-          speed={0.009}
+        <Squares
+          direction="diagonal"
+          speed={0.3}
+          squareSize={50}
+          borderColor={theme === 'dark' ? 'rgba(200, 200, 200, 0.6)' : 'rgba(60, 60, 60, 0.3)'}
+          hoverFillColor={theme === 'dark' ? 'rgba(128, 128, 128, 0.5)' : 'rgba(0, 0, 0, 0.05)'}
+          backgroundColor={theme === 'dark' ? 'transparent' : 'transparent'}
+          className="opacity-60"
         />
       </div>
       

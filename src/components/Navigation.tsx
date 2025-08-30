@@ -49,7 +49,7 @@ const Navigation = () => {
                 onClick={() => scrollToSection(item)}
                 className="font-mono text-sm hover:text-primary transition-colors duration-200 uppercase tracking-wider border-2 border-transparent hover:border-primary px-3 py-1"
               >
-                {item}
+                {item === 'contact' ? 'hire me' : item}
               </button>
             ))}
           </div>
