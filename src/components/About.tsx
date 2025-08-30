@@ -1,6 +1,7 @@
 
 import { Squares } from "@/components/ui/squares-background";
 import { useTheme } from "next-themes";
+import OrbitingSkills from "@/components/ui/orbiting-skills";
 
 const About = () => {
   const { theme } = useTheme();
@@ -28,8 +29,9 @@ const About = () => {
           <span className="text-primary">/&gt;</span>
         </h2>
 
-        <div className="grid md:grid-cols-2 gap-8 items-center">
-          <div className="pixel-card">
+        <div className="relative flex flex-col items-center">
+          {/* Top box */}
+          <div className="pixel-card max-w-lg mb-8">
             <div className="space-y-4 font-mono">
               <div className="text-pixel-blue">
                 <span className="text-pixel-purple">class</span>{' '}
@@ -71,12 +73,14 @@ const About = () => {
             </div>
           </div>
 
-          <div className="space-y-6">
-            <div className="pixel-card">
+          {/* Center section with Orbiting Skills and side boxes */}
+          <div className="flex flex-col lg:flex-row items-center justify-center gap-8 lg:gap-16">
+            {/* Left box */}
+            <div className="pixel-card w-80 h-60 order-2 lg:order-1 flex flex-col p-4">
               <h3 className="text-xl font-code font-bold mb-4 text-primary">
                 // My Journey
               </h3>
-              <p className="font-mono leading-relaxed">
+              <p className="font-mono leading-relaxed text-sm flex-1">
                 I've always had a <span className="text-primary font-bold">creative mindset</span>, 
                 which naturally led me to fall in love with frontend and UI development. 
                 There's something magical about transforming ideas into interactive, 
@@ -84,11 +88,17 @@ const About = () => {
               </p>
             </div>
 
-            <div className="pixel-card">
+            {/* Center - Orbiting Skills */}
+            <div className="flex items-center justify-center min-h-[500px] order-1 lg:order-2">
+              <OrbitingSkills />
+            </div>
+
+            {/* Right box */}
+            <div className="pixel-card w-80 h-60 order-3 flex flex-col p-4">
               <h3 className="text-xl font-code font-bold mb-4 text-primary">
                 // Why Frontend?
               </h3>
-              <p className="font-mono leading-relaxed">
+              <p className="font-mono leading-relaxed text-sm flex-1">
                 Frontend development is where <span className="text-pixel-green">creativity meets code</span>. 
                 It's the perfect blend of technical problem-solving and visual design, 
                 allowing me to craft user experiences that are both functional and delightful.

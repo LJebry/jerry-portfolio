@@ -116,7 +116,7 @@ const Projects = () => {
         <div className="text-center mt-12">
           <div className="pixel-card inline-block">
             <p className="font-mono text-muted-foreground">
-              <span className="text-primary">// TODO:</span> Add live project links and GitHub repos
+              <span className="text-primary">// TODO:</span> Keep on building!
             </p>
           </div>
         </div>
