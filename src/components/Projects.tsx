@@ -28,7 +28,7 @@ const Projects = () => {
       title: "Project Three",
       description: "Next.js application with server-side rendering and optimized performance for better user experience.",
       technologies: ["Next.js", "TypeScript", "CSS Modules"],
-      status: "Planning",
+      status: "Completed",
       githubUrl: "#", // Replace with actual GitHub URL
       liveUrl: "#" // Replace with actual live URL
     }
