@@ -20,7 +20,7 @@ const Projects = () => {
       title: "Project Two", 
       description: "Ruby on Rails backend API with React frontend, implementing CRUD operations and responsive design.",
       technologies: ["Ruby on Rails", "React", "JavaScript", "CSS"],
-      status: "Completed",
+      status: "Planning",
       githubUrl: "#", // Replace with actual GitHub URL
       liveUrl: "#" // Replace with actual live URL
     },
