@@ -26,7 +26,7 @@ This repository contains the source code for my personal portfolio website. It's
 *   **Build Tool:** [Vite](https://vitejs.dev/)
 *   **Styling:** [Tailwind CSS](https://tailwindcss.com/) with custom pixel-art themes and animations.
 *   **UI Components:** Built with [Shadcn/UI](https://ui.shadcn.com/) primitives.
-*   **Animations:** [Framer Motion](https://www.framer.com/motion/) for animations and transitions. (21st.dev is also a great resource)
+*   **Animations:** [Framer Motion](https://www.framer.com/motion/) (All animations came from 21st.dev)
 *   **Icons:** [Lucide React](https://lucide.dev/) & [React Icons](https://react-icons.github.io/react-icons/).
 *   **Contact Form:** [EmailJS](https://www.emailjs.com/) for serverless email sending.
 *   **Routing:** [React Router DOM](https://reactrouter.com/)
