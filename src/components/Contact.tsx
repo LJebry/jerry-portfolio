@@ -3,6 +3,9 @@ import { useState } from 'react';
 import { Mail, Send, Loader2 } from 'lucide-react';
 import emailjs from '@emailjs/browser';
 import { BackgroundPaths } from "@/components/ui/background-paths";
+import { FaLinkedin } from "react-icons/fa6";
+import { FaDiscord } from "react-icons/fa";
+
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -102,6 +105,14 @@ ${formData.message}`;
                 <Mail size={16} className="text-primary" />
                 <span className="text-muted-foreground">jerryrobayo1130@gmail.com</span>
               </div>
+              <div className="flex items-center gap-2 font-mono">
+                <FaLinkedin size={16} className="text-primary" />
+                <a href="https://www.linkedin.com/in/jerry-robayo/" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">LinkedIn</a>
+              </div>
+              <div className="flex items-center gap-2 font-mono">
+              <FaDiscord size={16} className="text-primary" />
+              <a href="https://discord.com/users/227648604252327936" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">Discord</a>
+            </div>
             </div>
 
             <div className="pixel-card">
