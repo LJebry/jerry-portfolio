@@ -15,7 +15,7 @@ This repository contains the source code for my personal portfolio website. It's
 *   **Pixel-Art Design:** A retro, code-centric aesthetic with custom "pixel" components and shadows.
 *   **Interactive UI:** Engaging animations including orbiting skill icons, animated background paths, and interactive square grids.
 *   **Responsive Layout:** Fully responsive design that looks great on desktops, tablets, and mobile devices.
-*   **Contact Form:** An integrated contact form using EmailJS to send messages directly from the site, with a `mailto:` fallback.
+*   **Contact Form:** An integrated contact form that posts to a Vercel serverless email endpoint, with a `mailto:` fallback when the backend is unavailable.
 *   **Light/Dark Mode:** A theme toggle to switch between light and dark modes, with preferences saved in local storage.
 *   **Component-Based:** Built with a modular and scalable component architecture using React.
 
@@ -28,7 +28,7 @@ This repository contains the source code for my personal portfolio website. It's
 *   **UI Components:** Built with [Shadcn/UI](https://ui.shadcn.com/) primitives.
 *   **Animations:** [Framer Motion](https://www.framer.com/motion/) (All animations came from 21st.dev)
 *   **Icons:** [Lucide React](https://lucide.dev/) & [React Icons](https://react-icons.github.io/react-icons/).
-*   **Contact Form:** [EmailJS](https://www.emailjs.com/) for serverless email sending.
+*   **Contact Form Backend:** Vercel serverless function powered by [Nodemailer](https://nodemailer.com/).
 *   **Routing:** [React Router DOM](https://reactrouter.com/)
 
 ## Project Structure
@@ -58,15 +58,20 @@ To run this project locally and make some custom changes for yourself, follow th
     npm install
     ```
 
-3.  **Set up environment variables:**
-    The contact form uses EmailJS. Create a `.env.local` file in the root of the project and add your EmailJS credentials.
+3.  **Configure email sending:**
+    The contact form posts to `/api/send-email`, a Vercel serverless function that uses Nodemailer. In your Vercel project settings add the following environment variables (Production, and Preview if needed):
 
-    ```env
-    VITE_EMAILJS_SERVICE_ID=your_service_id
-    VITE_EMAILJS_TEMPLATE_ID=your_template_id
-    VITE_EMAILJS_PUBLIC_KEY=your_public_key
-    ```
-    For detailed instructions on setting up EmailJS, refer to the [EMAILJS_SETUP.md](./EMAILJS_SETUP.md) guide. If these variables are not provided, the contact form will fall back to opening the user's default email client.
+    | Key | Example | Description |
+    | --- | --- | --- |
+    | `SMTP_HOST` | `smtp.gmail.com` | SMTP server hostname |
+    | `SMTP_PORT` | `587` | SMTP port (`587` TLS / `465` SSL) |
+    | `SMTP_USER` | `you@example.com` | SMTP login/username |
+    | `SMTP_PASS` | `app-password` | SMTP password or app password |
+    | `CONTACT_RECIPIENT` | `you@example.com` | Destination inbox |
+    | `CONTACT_FROM_EMAIL` *(optional)* | `portfolio@yourdomain.com` | From header override |
+    | `CONTACT_FROM_NAME` *(optional)* | `Your Portfolio` | Friendly sender name |
+
+    Redeploy after saving the values. For local development you can either run `vercel dev` (so the API runs locally) or set `VITE_CONTACT_API_URL=https://your-site.vercel.app/api/send-email` in `.env.local` to call the deployed endpoint from `npm run dev`.
 
 4.  **Run the development server:**
     ```sh

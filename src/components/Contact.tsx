@@ -1,11 +1,8 @@
-
 import { useState } from 'react';
 import { Mail, Send, Loader2 } from 'lucide-react';
-import emailjs from '@emailjs/browser';
 import { BackgroundPaths } from "@/components/ui/background-paths";
 import { FaLinkedin } from "react-icons/fa6";
 import { FaDiscord } from "react-icons/fa";
-
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -14,55 +11,54 @@ const Contact = () => {
     company: '',
     message: ''
   });
-  
+
   const [isLoading, setIsLoading] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  const endpoint = import.meta.env.VITE_CONTACT_API_URL ?? '/api/send-email';
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
     setSubmitStatus('idle');
-    
-    try {
-      // EmailJS configuration - you'll need to set these environment variables
-      const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
-      const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
-      const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
-      
-      if (!serviceId || !templateId || !publicKey) {
-        console.error('EmailJS configuration missing. Please check your environment variables.');
-        // Fallback to mailto for now
-        const subject = `Portfolio Contact from ${formData.name}`;
-        const body = `Name: ${formData.name}
-Email: ${formData.email}
-Company: ${formData.company}
+    setErrorMessage(null);
 
-Message:
-${formData.message}`;
-        
-        const mailtoLink = `mailto:jerryrobayo1130@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-        window.open(mailtoLink, '_blank');
-        setSubmitStatus('success');
-        setFormData({ name: '', email: '', company: '', message: '' });
-        return;
+    try {
+      const response = await fetch(endpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        const data = await response.json().catch(() => null);
+        const errorText = data?.error ?? 'Failed to send message. Please try again later.';
+
+        if (
+          response.status === 500 &&
+          errorText.toLowerCase().includes('not configured')
+        ) {
+          const subject = `Portfolio Contact from ${formData.name}`;
+          const body = `Name: ${formData.name}\nEmail: ${formData.email}\nCompany: ${formData.company}\n\nMessage:\n${formData.message}`;
+
+          const mailtoLink = `mailto:jerryrobayo1130@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+          window.open(mailtoLink, '_blank');
+          setSubmitStatus('success');
+          setFormData({ name: '', email: '', company: '', message: '' });
+          return;
+        }
+
+        throw new Error(errorText);
       }
 
-      // Send email using EmailJS
-      const templateParams = {
-        name: formData.name,  // Changed from from_name to name
-        email: formData.email,  // Changed from from_email to email
-        company: formData.company,
-        message: formData.message,
-        to_email: 'jerryrobayo1130@gmail.com',
-      };
-
-      await emailjs.send(serviceId, templateId, templateParams, publicKey);
-      
       setSubmitStatus('success');
       setFormData({ name: '', email: '', company: '', message: '' });
-      
     } catch (error) {
-      console.error('Failed to send email:', error);
+      console.error('Failed to submit contact form:', error);
+      setErrorMessage(error instanceof Error ? error.message : null);
       setSubmitStatus('error');
     } finally {
       setIsLoading(false);
@@ -82,7 +78,7 @@ ${formData.message}`;
       <div className="absolute inset-0 w-full h-full transform scale-y-[-1]">
         <BackgroundPaths />
       </div>
-      
+
       {/* Content */}
       <div className="container mx-auto max-w-4xl relative z-10">
         <h2 className="text-4xl md:text-5xl font-code font-bold text-center mb-12">
@@ -98,7 +94,7 @@ ${formData.message}`;
                 // Let's Connect
               </h3>
               <p className="font-mono leading-relaxed mb-4">
-                I'm always excited to discuss new opportunities, collaborate on interesting projects, 
+                I'm always excited to discuss new opportunities, collaborate on interesting projects,
                 or just chat about frontend development and creative coding.
               </p>
               <div className="flex items-center gap-2 font-mono">
@@ -110,9 +106,9 @@ ${formData.message}`;
                 <a href="https://www.linkedin.com/in/jerry-robayo/" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">LinkedIn</a>
               </div>
               <div className="flex items-center gap-2 font-mono">
-              <FaDiscord size={16} className="text-primary" />
-              <a href="https://discord.com/users/227648604252327936" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">Discord</a>
-            </div>
+                <FaDiscord size={16} className="text-primary" />
+                <a href="https://discord.com/users/227648604252327936" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">Discord</a>
+              </div>
             </div>
 
             <div className="pixel-card">
@@ -134,7 +130,7 @@ ${formData.message}`;
               <h3 className="text-xl font-code font-bold mb-6 text-primary">
                 // Send Message
               </h3>
-              
+
               <div className="space-y-4">
                 <div>
                   <label className="block font-mono font-bold mb-2">Name *</label>
@@ -187,8 +183,8 @@ ${formData.message}`;
                   />
                 </div>
 
-                <button 
-                  type="submit" 
+                <button
+                  type="submit"
                   disabled={isLoading}
                   className="pixel-button w-full flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
@@ -204,16 +200,16 @@ ${formData.message}`;
                     </>
                   )}
                 </button>
-                
+
                 {submitStatus === 'success' && (
                   <div className="mt-4 p-3 bg-green-100 border-2 border-green-500 text-green-800 font-mono text-sm">
                     ✓ Message sent successfully! I'll get back to you soon.
                   </div>
                 )}
-                
+
                 {submitStatus === 'error' && (
                   <div className="mt-4 p-3 bg-red-100 border-2 border-red-500 text-red-800 font-mono text-sm">
-                    ✗ Failed to send message. Please try again or email me directly.
+                    ✗ {errorMessage ?? 'Failed to send message. Please try again or email me directly.'}
                   </div>
                 )}
               </div>
