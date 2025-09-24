@@ -10,8 +10,8 @@ const Projects = () => {
   const projects = [
     {
       title: "Portfolio",
-      description: "A modern portfolio website built with React and TypeScript, featuring pixel-art design, animated backgrounds, and EmailJS contact integration. Also my very first portfolio website!",
-      technologies: ["React", "TypeScript", "Vite", "Tailwind CSS", "EmailJS", "Lucide React"],
+      description: "A modern portfolio website built with React and TypeScript, featuring pixel-art design, animated backgrounds, and a serverless Nodemailer contact workflow hosted on Vercel.",
+      technologies: ["React", "TypeScript", "Vite", "Tailwind CSS", "Vercel Functions", "Nodemailer", "Lucide React"],
       status: "Completed",
       githubUrl: "https://github.com/LJebry/jerry-portfolio",
       liveUrl: "https://jerry-portfolio-hazel.vercel.app"
